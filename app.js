@@ -9,7 +9,7 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&l
 async function del(t,id){if(!confirm("Delete this record?"))return;await api(`/api/${t}?id=${id}`,{method:"DELETE"});await loadTables();await refreshStats()}
 $("#farmerForm").addEventListener("submit",async e=>{e.preventDefault();const m=$("#farmerMsg");try{await api("/api/farmers",{method:"POST",body:new FormData(e.target)});e.target.reset();m.textContent="Saved successfully.";await refreshStats()}catch(x){m.textContent=x.message}})
 $("#surveyForm").addEventListener("submit",async e=>{e.preventDefault();const m=$("#surveyMsg");try{await api("/api/surveys",{method:"POST",body:new FormData(e.target)});e.target.reset();m.textContent="Survey saved.";await refreshStats()}catch(x){m.textContent=x.message}})
-$("#loginBtn").onclick=async()=>{try{await api("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:$("#u").value,password:$("#p").value})});$("#login").hidden=true;$("#dash").hidden=false;await loadTables()}catch(e){$("#loginMsg").textContent="Invalid login."}}
+$("#loginBtn").onclick=async()=>{try{await api("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:$("admin").value,password:$("gauconnect").value})});$("#login").hidden=true;$("#dash").hidden=false;await loadTables()}catch(e){$("#loginMsg").textContent="Invalid login."}}
 $("#logout").onclick=()=>{$("#dash").hidden=true;$("#login").hidden=false;$("#p").value=""}
 $("#search").oninput=()=>{const q=$("#search").value.toLowerCase();renderFarmers(farmerCache.filter(x=>(x.name+" "+x.phone+" "+x.area).toLowerCase().includes(q)))}
 refreshStats()
